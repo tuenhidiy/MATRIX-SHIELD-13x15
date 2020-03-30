@@ -7,7 +7,7 @@
 #include "font8x16.h"
 #include "vnfont8x16.h"
 
-#define RowA3_Pin       7   // PH4
+#define RowA3_Pin       8   // PH5
 #define RowA2_Pin       6   // PH3
 #define RowA1_Pin       5   // PE3
 #define RowA0_Pin       4   // PG5
@@ -18,7 +18,7 @@
 #define CLOCK_Pin       52
 
 
-#define N_GRAINS     65  // Number of grains of sand
+#define N_GRAINS     65   // Number of grains of sand
 #define WIDTH        15   // Display width in pixels
 #define HEIGHT       13   // Display height in pixels
 #define MAX_FPS      45   // Maximum redraw rate, frames/second
@@ -304,14 +304,14 @@ void rowscan(byte row)
   if (row & 0x01) PORTG |= _BV(5);    //PORTA |= _BV(0)
     else          PORTG &= ~_BV(5);   //PORTA &= ~_BV(0)
   
-  if (row & 0x02) PORTE |= _BV(3);    //PORTA |= _BV(2)
-    else          PORTE &= ~_BV(3);   //PORTA &= ~_BV(2)
+  if (row & 0x02) PORTE |= _BV(3);
+    else          PORTE &= ~_BV(3);
 
-  if (row & 0x04) PORTH |= _BV(3);    //PORTA |= _BV(4)
-    else          PORTH &= ~_BV(3);   //PORTA &= ~_BV(4)
+  if (row & 0x04) PORTH |= _BV(3);
+    else          PORTH &= ~_BV(3);
 
-  if (row & 0x08) PORTH |= _BV(4);    //PORTA |= _BV(6)
-    else          PORTH &= ~_BV(4);   //PORTA &= ~_BV(6)
+  if (row & 0x08) PORTH |= _BV(5);
+    else          PORTH &= ~_BV(5);
 
 }  
 void DIY_SPI(uint8_t DATA)
@@ -331,13 +331,13 @@ ISR(TIMER1_COMPA_vect)
 {   
   PORTE |= ((1<<4));    // Set BLANK PIN high - 74HC595
 
-  if(BAM_Counter==8)    // Bit weight 2^0 of BAM_Bit, lasting time = 6 ticks x interrupt interval time
+  if(BAM_Counter==8)    // Bit weight 2^0 of BAM_Bit, lasting time = 8 ticks x interrupt interval time
   BAM_Bit++;
   else
-  if(BAM_Counter==24)   // Bit weight 2^1 of BAM_Bit, lasting time = 18 ticks x interrupt interval time
+  if(BAM_Counter==24)   // Bit weight 2^1 of BAM_Bit, lasting time = 24 ticks x interrupt interval time
   BAM_Bit++;
   else
-  if(BAM_Counter==56)   // Bit weight 2^3 of BAM_Bit, lasting time = 42 ticks x interrupt interval time
+  if(BAM_Counter==56)   // Bit weight 2^3 of BAM_Bit, lasting time = 56 ticks x interrupt interval time
   BAM_Bit++;
   BAM_Counter++;
   switch (BAM_Bit)
@@ -361,7 +361,7 @@ ISR(TIMER1_COMPA_vect)
       //
         SPI.transfer(matrixBuffer[3][level + 0]);
         SPI.transfer(matrixBuffer[3][level + 1]);      
-    if(BAM_Counter==120)    //Bit weight 2^3 of BAM_Bit, lasting time = 90 ticks x interrupt interval time
+    if(BAM_Counter==120)    //Bit weight 2^3 of BAM_Bit, lasting time = 120 ticks x interrupt interval time
     {
     BAM_Counter=0;
     BAM_Bit=0;
