@@ -14,8 +14,8 @@
 
 #define BLANK_Pin       2   // PE4
 #define LATCH_Pin       3   // PE5
-#define DATA_Pin        51   
-#define CLOCK_Pin       52
+#define DATA_Pin        51  // MOSI
+#define CLOCK_Pin       52  // SCK
 
 
 #define N_GRAINS     65   // Number of grains of sand
